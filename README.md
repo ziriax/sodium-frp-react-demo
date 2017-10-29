@@ -1,14 +1,9 @@
 # sodium-frp-react-demo
-> Example of how to use the sodium-react-frp package
-
-## Install
-
-```bash
-npm i sodium-frp-react-demo
-```
+> Example of how to use the [sodium-react-frp](https://github.com/Ziriax/sodium-frp-react) package
 
 ## Usage
 ```bash
+npm i
 npm start
 ```
 
