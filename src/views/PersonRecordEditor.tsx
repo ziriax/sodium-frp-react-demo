@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as FRP from "../sodium-frp-react"
+import * as FRP from "sodium-frp-react"
 
 import * as S from "sodiumjs"
 import * as M from "../models/person"
@@ -9,7 +9,7 @@ interface Props {
     readonly person: C.Person;
 }
 
-export class PersonItemEditor extends React.PureComponent<Props> {
+export class PersonRecordEditor extends React.PureComponent<Props> {
 
     setFirstName = (e: React.ChangeEvent<HTMLInputElement>) => this.props.person.firstName.send(e.currentTarget.value);
 

@@ -5,8 +5,7 @@
   "main": "src/index.tsx",
   "scripts": {
     "build": "webpack -p --progress --colors",
-    "start": "start http://localhost:3000",
-    "serve": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000"
+    "start": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000 --open http://localhost:3000"
   },
   "repository": {
     "type": "git",
@@ -33,6 +32,7 @@
     "react": "^16.0.0",
     "react-display-name": "^0.2.3",
     "react-dom": "^16.0.0",
+    "sodium-frp-react": "^0.1.0",
     "sodiumjs": "^1.0.4"
   },
   "devDependencies": {

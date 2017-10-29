@@ -30,7 +30,12 @@ module.exports = {
   target: 'web',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    alias: {
+      "react": path.resolve(__dirname, 'node_modules', 'react'),
+      "sodiumjs": path.resolve(__dirname, 'node_modules', 'sodiumjs'),
+      "typescript-collections": path.resolve(__dirname, 'node_modules', 'typescript-collections'),
+    },
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
   module: {
     loaders: [

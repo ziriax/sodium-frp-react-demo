@@ -1,4 +1,4 @@
 export * from "./PersonItemView"
-export * from "./PersonItemEditor"
+export * from "./PersonRecordEditor"
 export * from "./PersonListView"
 export * from "./PersonListEditor"
