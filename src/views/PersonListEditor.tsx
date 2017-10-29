@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as FRP from "sodium-frp-react"
+import * as FRP from "../sodium-frp-react"
 
 import * as S from "sodiumjs"
 import * as M from "../models"

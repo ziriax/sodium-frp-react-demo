@@ -4,6 +4,7 @@ import { AppContainer } from 'react-hot-loader'
 import { App } from './containers/App'
 
 const render = () => {
+  console.info("Rendering app...");
   ReactDOM.render(
     <AppContainer>
       <App />
@@ -21,5 +22,5 @@ namespace global {
 }
 
 if (module.hot) {
-  module.hot.accept('./containers/App', () => { render() })
+  module.hot.accept(); //'.', render);
 }
