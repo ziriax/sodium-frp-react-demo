@@ -1,18 +1,18 @@
 import *  as React from 'react'
 import *  as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { Root } from './containers/Root'
+import { App } from './containers/App'
 
-const render = (Component: React.ComponentClass | React.StatelessComponent) => {
+const render = () => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <App />
     </AppContainer>,
     document.getElementById('root')
   )
 }
 
-render(Root)
+render()
 
 namespace global {
   interface NodeModule {
@@ -21,5 +21,5 @@ namespace global {
 }
 
 if (module.hot) {
-  module.hot.accept('./containers/Root', () => { render(Root) })
+  module.hot.accept('./containers/App', () => { render() })
 }

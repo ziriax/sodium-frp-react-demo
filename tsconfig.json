@@ -12,15 +12,24 @@
     "noImplicitReturns": true,
     "removeComments": true,
     "strict": true,
-    "outDir": "build",
+    "outDir": "dist",
     "lib": [
       "es6",
       "dom"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "sodiumjs": [
+        "node_modules/sodiumjs/*"
+      ],
+      "*": [
+        "node_modules/@types/*",
+        "*"
+      ]
+    }
   },
   "exclude": [
     "dist",
-    "build",
     "node_modules"
   ]
 }
