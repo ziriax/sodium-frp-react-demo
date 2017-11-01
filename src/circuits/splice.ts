@@ -1,58 +1,56 @@
 import * as F from "sodium-frp-react"
+import * as M from "../models"
 
 /** Helper functions to splice an immutable array */
 export namespace Splice {
-    export enum Kind {
-        APPEND,
-        REMOVE
-    }
-
     export interface Action<T> {
-        readonly kind: Kind;
-        readonly item: T;
+        readonly startIndex: number | ((items: ReadonlyArray<T>) => number);
+        readonly deleteCount: number;
+        readonly insertItems: ReadonlyArray<T>;
     }
 
-    export function append<T>(item: T) {
-        return { kind: Kind.APPEND, item };
+    export function append<T>(...items: T[]): Action<T> {
+        return { startIndex: ((items: ReadonlyArray<T>) => items.length - 1), insertItems: items, deleteCount: 0 };
     }
 
-    export function remove<T>(item: T) {
-        return { kind: Kind.REMOVE, item };
+    export function remove<T>(item: T): Action<T> {
+        return { startIndex: ((items: ReadonlyArray<T>) => items.indexOf(item)), insertItems: [], deleteCount: 0 };
+    }
+
+    export function startIndexOf<T>(items: ReadonlyArray<T>, action: Action<T>): number {
+        return typeof action.startIndex === "function" ? action.startIndex(items) : action.startIndex;
     }
 
     export function reduce<T>(action: Action<T>, items: ReadonlyArray<T>): ReadonlyArray<T> {
-        switch (action.kind) {
-            case Kind.APPEND:
-                return items.concat(action.item);
-
-            case Kind.REMOVE:
-                return items.filter(item => item !== action.item);
-
-            default:
-                return F.assertNever(action.kind);
-        }
+        const startIndex = startIndexOf(items, action);
+        return F.immutableSplice(items, startIndex, action.deleteCount, ...action.insertItems);
     }
 
     export function selected<T>(action: Action<T>, items: ReadonlyArray<T>): T | null {
-        switch (action.kind) {
-            case Kind.APPEND:
-                // When an item is added, select it
-                return action.item;
-
-            case Kind.REMOVE:
-                // When an item is removed, select the next one
-                const index = items.indexOf(action.item);
-                if (index + 1 < items.length)
-                    return items[index + 1];
-
-                if (index - 1 >= 0)
-                    return items[index - 1];
-
-                return null;
-
-            default:
-                return F.assertNever(action.kind);
+        if (action.insertItems.length > 0) {
+            // When items are added, select the last one.
+            return action.insertItems[action.insertItems.length - 1];
         }
+
+        if (action.deleteCount > 0) {
+            // When items are removed, select the next one
+            const startIndex = startIndexOf(items, action);
+            const index = startIndex + action.deleteCount;
+            if (index < items.length)
+                return items[index];
+
+            if (index - 1 >= 0)
+                return items[index - 1];
+        }
+
+        // By default select the last item
+        return items.length > 0 ? items[items.length - 1] : null;
+    }
+
+    /** Based on the identifiers, figure out what items need to be added, removed or updated */
+    export function deltas<T>(source: ReadonlyArray<M.Identified<T>>, target: ReadonlyArray<M.Identified<T>>): ReadonlyArray<Action<T>> {
+        const actions: Action<T>[] = [];
+        return actions;
     }
 }
 
