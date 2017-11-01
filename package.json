@@ -4,6 +4,7 @@
   "description": "Examples of how to use the sodium-frp-react package",
   "main": "src/index.tsx",
   "scripts": {
+    "tsc": "tsc",
     "build": "webpack -p --progress --colors",
     "start": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000 --open http://localhost:3000"
   },
@@ -32,7 +33,7 @@
     "react": "^16.0.0",
     "react-display-name": "^0.2.3",
     "react-dom": "^16.0.0",
-    "sodium-frp-react": "^0.1.0",
+    "sodium-frp-react": "^0.2.2",
     "sodiumjs": "^1.0.4"
   },
   "devDependencies": {
@@ -42,7 +43,7 @@
     "awesome-typescript-loader": "^3.2.3",
     "html-webpack-plugin": "^2.30.1",
     "react-hot-loader": "^3.0.0-beta.6",
-    "typescript": "^2.5.3",
+    "typescript": "^2.6.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1"
   }

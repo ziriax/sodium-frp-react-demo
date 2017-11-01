@@ -18,8 +18,8 @@ const PersonDetailView = FRP.lift((props: { selected: C.Person | null }) => {
 });
 
 export class PersonListEditor extends React.PureComponent<Props> {
-    private addPerson = (e: React.MouseEvent<HTMLElement>) => this.props.list.add.send(M.Person.empty);
-    private removePerson = (e: React.MouseEvent<HTMLElement>) => this.props.list.remove.send(S.Unit.UNIT);
+    private addPerson = () => this.props.list.add.send(M.Identified.create(M.Person.empty));
+    private removePerson = () => this.props.list.remove.send(S.Unit.UNIT);
     private selectPerson = (p: C.Person) => this.props.list.select.send(p);
 
     public render() {
@@ -31,12 +31,8 @@ export class PersonListEditor extends React.PureComponent<Props> {
                     <FRP.button onClick={this.addPerson}>Add new person</FRP.button>
                     <FRP.button onClick={this.removePerson}>Remove selected person</FRP.button>
                 </div>
-                <div className="group">
-                    <PersonDetailView selected={selected} />
-                </div>
-                <div className="group">
-                    <PersonListView persons={persons} select={this.selectPerson} />
-                </div>
+                <PersonDetailView selected={selected} />
+                <PersonListView persons={persons} select={this.selectPerson} />
             </div>
         );
     }

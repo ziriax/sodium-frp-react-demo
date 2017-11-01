@@ -1,4 +1,4 @@
-import * as H from "./helpers"
+import * as F from "sodium-frp-react"
 
 /** Helper functions to splice an immutable array */
 export namespace Splice {
@@ -29,7 +29,7 @@ export namespace Splice {
                 return items.filter(item => item !== action.item);
 
             default:
-                return H.assertNever(action.kind);
+                return F.assertNever(action.kind);
         }
     }
 
@@ -51,7 +51,7 @@ export namespace Splice {
                 return null;
 
             default:
-                return H.assertNever(action.kind);
+                return F.assertNever(action.kind);
         }
     }
 }

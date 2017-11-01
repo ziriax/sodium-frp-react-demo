@@ -11,9 +11,9 @@ interface Props {
 
 export class PersonRecordEditor extends React.PureComponent<Props> {
 
-    setFirstName = (e: React.ChangeEvent<HTMLInputElement>) => this.props.person.firstName.send(e.currentTarget.value);
+    setFirstName = (e: React.ChangeEvent<HTMLInputElement>) => this.props.person.setFirstName.send(e.currentTarget.value);
 
-    setLastName = (e: React.ChangeEvent<HTMLInputElement>) => this.props.person.lastName.send(e.currentTarget.value);
+    setLastName = (e: React.ChangeEvent<HTMLInputElement>) => this.props.person.setLastName.send(e.currentTarget.value);
 
     public render() {
 

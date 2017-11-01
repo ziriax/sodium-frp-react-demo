@@ -22,6 +22,9 @@
       "sodiumjs": [
         "node_modules/sodiumjs/*"
       ],
+      "typescript-collections": [
+        "node_modules/typescript-collections/*"
+      ],
       "*": [
         "node_modules/@types/*",
         "*"

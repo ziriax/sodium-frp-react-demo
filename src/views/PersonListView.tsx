@@ -12,6 +12,7 @@ interface Props {
     select(person: C.Person): void;
 }
 
+// TODO: getItemKey should allow returning a number, like React
 export const PersonListView = FRP.list(PersonItemView,
     (props: Props) => props.persons.map(person => ({ person, select: props.select })),
-    item => item.person.id);
+    item => `Person#${item.person.modelId}`);
