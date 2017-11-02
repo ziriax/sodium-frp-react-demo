@@ -10,11 +10,11 @@ export namespace Splice {
     }
 
     export function append<T>(...items: T[]): Action<T> {
-        return { startIndex: ((items: ReadonlyArray<T>) => items.length - 1), insertItems: items, deleteCount: 0 };
+        return { startIndex: ((items: ReadonlyArray<T>) => items.length), insertItems: items, deleteCount: 0 };
     }
 
     export function remove<T>(item: T): Action<T> {
-        return { startIndex: ((items: ReadonlyArray<T>) => items.indexOf(item)), insertItems: [], deleteCount: 0 };
+        return { startIndex: ((items: ReadonlyArray<T>) => items.indexOf(item)), insertItems: [], deleteCount: 1 };
     }
 
     export function startIndexOf<T>(items: ReadonlyArray<T>, action: Action<T>): number {
@@ -23,6 +23,9 @@ export namespace Splice {
 
     export function reduce<T>(action: Action<T>, items: ReadonlyArray<T>): ReadonlyArray<T> {
         const startIndex = startIndexOf(items, action);
+        if (startIndex < 0)
+            throw new Error("Item not found");
+
         return F.immutableSplice(items, startIndex, action.deleteCount, ...action.insertItems);
     }
 
@@ -35,12 +38,13 @@ export namespace Splice {
         if (action.deleteCount > 0) {
             // When items are removed, select the next one
             const startIndex = startIndexOf(items, action);
-            const index = startIndex + action.deleteCount;
-            if (index < items.length)
-                return items[index];
-
-            if (index - 1 >= 0)
-                return items[index - 1];
+            const after = startIndex + action.deleteCount;
+            const before = startIndex - 1;
+            return after < items.length
+                ? items[after]
+                : before >= 0
+                    ? items[before]
+                    : null;
         }
 
         // By default select the last item

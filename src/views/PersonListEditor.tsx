@@ -23,13 +23,13 @@ export class PersonListEditor extends React.PureComponent<Props> {
     private selectPerson = (p: C.Person) => this.props.list.select.send(p);
 
     public render() {
-        const { persons, selected } = this.props.list;
+        const { persons, selected, canRemove } = this.props.list;
 
         return (
             <div className="group">
                 <div className="toolbar">
                     <FRP.button onClick={this.addPerson}>Add new person</FRP.button>
-                    <FRP.button onClick={this.removePerson}>Remove selected person</FRP.button>
+                    <FRP.button disabled={canRemove.map(x => !x)}  onClick={this.removePerson}>Remove selected person</FRP.button>
                 </div>
                 <PersonDetailView selected={selected} />
                 <PersonListView persons={persons} select={this.selectPerson} />

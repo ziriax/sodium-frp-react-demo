@@ -12,10 +12,11 @@ export class PersonList {
     public readonly add = new S.StreamSink<M.Identified<M.Person>>();
     public readonly remove = new S.StreamSink<S.Unit>();
     public readonly select = new S.StreamSink<Person>();
-
+    
     public readonly persons: S.Cell<PersonArray>;
     public readonly selected: S.Cell<MaybePerson>;
-
+    public readonly canRemove: S.Cell<boolean>;
+    
     public readonly serializable: S.Cell<M.PersonList>;
 
     private constructor(loaded: S.Stream<M.PersonList>) {
@@ -40,6 +41,8 @@ export class PersonList {
         const selects = splices.snapshot(persons, Splice.selected).orElse(this.select).hold(null);
         selected.loop(selects);
 
+        const canRemove = selected.map(p => p !== null);
+        
         // Expose serializable data.
         const serializablePersons = S.Cell.switchC(persons.map(ps => F.flattenCells(ps.map(p => p.serializable))));
         const serializable = serializablePersons.lift(selected, (persons, s) => ({ persons, selectedId: s ? s.modelId : 0 }));
@@ -47,6 +50,7 @@ export class PersonList {
         // TODO: Handle loaded events
         loaded.listen(console.warn);
 
+        this.canRemove = canRemove;
         this.selected = selected;
         this.persons = persons;
         this.serializable = serializable;
