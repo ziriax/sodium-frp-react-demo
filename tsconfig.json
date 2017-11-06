@@ -1,28 +1,41 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "lib": [
-      "es6"
-    ],
-    "module": "commonjs",
+    "sourceMap": true,
     "target": "es5",
+    "jsx": "react",
+    "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
-    "sourceMap": false,
-    "declaration": true,
-    "outDir": "dist",
-    "removeComments": false,
-    "strict": true,
-    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "declaration": false,
     "noImplicitAny": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "noImplicitReturns": true,
+    "removeComments": true,
+    "strict": true,
+    "outDir": "dist",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "sodiumjs": [
+        "node_modules/sodiumjs/*"
+      ],
+      "typescript-collections": [
+        "node_modules/typescript-collections/*"
+      ],
+      "*": [
+        "node_modules/@types/*",
+        "*"
+      ]
+    }
   },
   "files": [
     "src/index.tsx"
   ],
   "exclude": [
+    "dist",
     "node_modules"
   ]
 }
