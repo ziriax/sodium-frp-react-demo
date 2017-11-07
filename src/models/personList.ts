@@ -16,7 +16,9 @@ export namespace PersonList {
 
     export function loadFrom(storage: Storage, key: string): PersonList {
         const data = storage.getItem(key);
-        return data ? JSON.parse(data) : empty;
+        const list: PersonList = data ? JSON.parse(data) : empty;
+        list.persons.map(p => Identified.register(p.id));
+        return list;
     }
 
     export function saveTo(list: PersonList, storage: Storage, key: string): void {

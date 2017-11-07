@@ -4,11 +4,15 @@ export type Identifier = number;
 export class Identified<D> {
     public static lastId = 0;
 
-    private constructor(public readonly data: D, public readonly id: number) {
+    private constructor(public readonly data: D, public readonly id: Identifier) {
     }
 
     toString() {
         return `${this.constructor.name}#${this.id}`;
+    }
+
+    public static register(id: Identifier) {
+        Identified.lastId = Math.max(Identified.lastId, id);
     }
 
     public static getNextId(): Identifier {
@@ -24,6 +28,7 @@ export class Identified<D> {
     }
 
     public static from<D>(id: Identifier, data: D): Identified<D> {
+        Identified.register(id);
         return new Identified<D>(data, id);
     }
 }

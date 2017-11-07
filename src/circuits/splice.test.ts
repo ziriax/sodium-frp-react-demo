@@ -39,6 +39,23 @@ describe("reduce", () => {
             expect(Splice.reduce(Splice.remove(2), [1, 2])).toMatchObject([1]);
         });
     });
+
+    describe("replace", () => {
+        test('[] by []', () => {
+            const items = [];
+            expect(Splice.reduce(Splice.replace([]), items)).toBe(items);
+        });
+
+        test('[1] by [1]', () => {
+            const items = [1];
+            expect(Splice.reduce(Splice.replace([1]), items)).toBe(items);
+        });
+
+        test('[1] by [1,2]', () => {
+            const items = [1];
+            expect(Splice.reduce(Splice.replace([1,2]), items)).not.toBe(items);
+        });
+    });
 });
 
 describe("selected", () => {
