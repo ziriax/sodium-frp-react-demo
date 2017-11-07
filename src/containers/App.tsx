@@ -4,9 +4,9 @@ import * as V from "../views"
 
 export class App extends React.PureComponent {
 
-  private readonly doc = C.Document.create();
+  private readonly doc = C.Document$.create();
 
   render() {
-    return <V.DocumentView doc={this.doc} />
+    return <V.DocumentView doc$={this.doc} />
   }
 }

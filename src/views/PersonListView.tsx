@@ -8,11 +8,11 @@ import * as C from "../circuits"
 import { PersonItemView } from "./PersonItemView"
 
 interface Props {
-    readonly persons: C.PersonArray;
-    select(person: C.Person): void;
+    readonly persons$: C.PersonArray$;
+    select(person$: C.Person$): void;
 }
 
 // TODO: getItemKey should allow returning a number, like React
 export const PersonListView = FRP.list(PersonItemView,
-    (props: Props) => props.persons.map(person => ({ person, select: props.select })),
-    item => `Person#${item.person.modelId}`);
+    (props: Props) => props.persons$.map(person$ => ({ person$, select: props.select })),
+    item => `Person#${item.person$.modelId}`);
