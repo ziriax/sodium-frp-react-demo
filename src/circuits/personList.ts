@@ -19,7 +19,7 @@ function mapIdToIndex<T>(items: ReadonlyArray<T>, getId: (item: T) => M.Identifi
 export class PersonList$ {
     public readonly add$ = new S.StreamSink<M.Identified<M.Person>>();
     public readonly remove$ = new S.StreamSink<S.Unit>();
-    public readonly select$ = new S.StreamSink<Person$>();
+    public readonly select$ = new S.StreamSink<MaybePerson$>();
 
     public readonly persons$: S.Cell<PersonArray$>;
     public readonly selected$: S.Cell<MaybePerson$>;
@@ -70,7 +70,7 @@ export class PersonList$ {
 
         // Compute the next selection
         // TODO: Also take the loaded selection-id into account.
-        const selects$ = splices$.snapshot(persons$, Splice.selected).orElse(this.select$).hold(null);
+        const selects$ = splices$.snapshot(persons$, (splices, person) => Splice.selected(splices, person)).orElse(this.select$).hold(null);
         selected$.loop(selects$);
 
         const canRemove$ = selected$.map(p => p !== null);
